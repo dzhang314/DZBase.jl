@@ -1,0 +1,4 @@
+name = "DZBase"
+uuid = "c4947dfe-1d26-43d6-a824-792e9b730583"
+authors = ["David K. Zhang <dzhang314@gmail.com>"]
+version = "0.1.0"
