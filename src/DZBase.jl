@@ -28,9 +28,21 @@ export +, ⊕, -, ⊖, *, ⊗, /, ⊘, %
 -(x::UInt32 ) = Core.Intrinsics.neg_int(x)
 -(x::UInt64 ) = Core.Intrinsics.neg_int(x)
 -(x::UInt128) = Core.Intrinsics.neg_int(x)
--(x::Float16) = Core.Intrinsics.neg_float_fast(x)
--(x::Float32) = Core.Intrinsics.neg_float_fast(x)
--(x::Float64) = Core.Intrinsics.neg_float_fast(x)
+
+-(x::Float16) = Core.Intrinsics.llvmcall("
+    %res = fneg fast half %0
+    ret half %res
+", Float16, Tuple{Float16}, x)
+
+-(x::Float32) = Core.Intrinsics.llvmcall("
+    %res = fneg fast float %0
+    ret float %res
+", Float32, Tuple{Float32}, x)
+
+-(x::Float64) = Core.Intrinsics.llvmcall("
+    %res = fneg fast double %0
+    ret double %res
+", Float64, Tuple{Float64}, x)
 
 ⊖(x::Float16) = Core.Intrinsics.llvmcall("
     %res = fneg nnan ninf nsz half %0
