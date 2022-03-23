@@ -1,6 +1,7 @@
 baremodule DZBase
 
-export +, ⊕, -, ⊖, *, ⊗, /, ⊘, %
+export +, ⊕, -, ⊖, *, ⊗, /, ⊘, %, ==, !=, <, >, <=, >=,
+    Array, Vector, Matrix, length
 
 ##################################################### UNARY ARITHMETIC OPERATORS
 
@@ -249,8 +250,106 @@ export +, ⊕, -, ⊖, *, ⊗, /, ⊘, %
 %(x::UInt32 , y::UInt32 ) = Core.Intrinsics.urem_int(x, y)
 %(x::UInt64 , y::UInt64 ) = Core.Intrinsics.urem_int(x, y)
 %(x::UInt128, y::UInt128) = Core.Intrinsics.urem_int(x, y)
-%(x::Float16, y::Float16) = Core.Intrinsics.rem_float_fast(x, y)
-%(x::Float32, y::Float32) = Core.Intrinsics.rem_float_fast(x, y)
-%(x::Float64, y::Float64) = Core.Intrinsics.rem_float_fast(x, y)
+
+########################################################### COMPARISON OPERATORS
+
+==(x::Int8   , y::Int8   ) = Core.Intrinsics.eq_int(x, y)
+==(x::Int16  , y::Int16  ) = Core.Intrinsics.eq_int(x, y)
+==(x::Int32  , y::Int32  ) = Core.Intrinsics.eq_int(x, y)
+==(x::Int64  , y::Int64  ) = Core.Intrinsics.eq_int(x, y)
+==(x::Int128 , y::Int128 ) = Core.Intrinsics.eq_int(x, y)
+==(x::UInt8  , y::UInt8  ) = Core.Intrinsics.eq_int(x, y)
+==(x::UInt16 , y::UInt16 ) = Core.Intrinsics.eq_int(x, y)
+==(x::UInt32 , y::UInt32 ) = Core.Intrinsics.eq_int(x, y)
+==(x::UInt64 , y::UInt64 ) = Core.Intrinsics.eq_int(x, y)
+==(x::UInt128, y::UInt128) = Core.Intrinsics.eq_int(x, y)
+
+!=(x::Int8   , y::Int8   ) = Core.Intrinsics.ne_int(x, y)
+!=(x::Int16  , y::Int16  ) = Core.Intrinsics.ne_int(x, y)
+!=(x::Int32  , y::Int32  ) = Core.Intrinsics.ne_int(x, y)
+!=(x::Int64  , y::Int64  ) = Core.Intrinsics.ne_int(x, y)
+!=(x::Int128 , y::Int128 ) = Core.Intrinsics.ne_int(x, y)
+!=(x::UInt8  , y::UInt8  ) = Core.Intrinsics.ne_int(x, y)
+!=(x::UInt16 , y::UInt16 ) = Core.Intrinsics.ne_int(x, y)
+!=(x::UInt32 , y::UInt32 ) = Core.Intrinsics.ne_int(x, y)
+!=(x::UInt64 , y::UInt64 ) = Core.Intrinsics.ne_int(x, y)
+!=(x::UInt128, y::UInt128) = Core.Intrinsics.ne_int(x, y)
+
+<(x::Int8   , y::Int8   ) = Core.Intrinsics.slt_int(x, y)
+<(x::Int16  , y::Int16  ) = Core.Intrinsics.slt_int(x, y)
+<(x::Int32  , y::Int32  ) = Core.Intrinsics.slt_int(x, y)
+<(x::Int64  , y::Int64  ) = Core.Intrinsics.slt_int(x, y)
+<(x::Int128 , y::Int128 ) = Core.Intrinsics.slt_int(x, y)
+<(x::UInt8  , y::UInt8  ) = Core.Intrinsics.ult_int(x, y)
+<(x::UInt16 , y::UInt16 ) = Core.Intrinsics.ult_int(x, y)
+<(x::UInt32 , y::UInt32 ) = Core.Intrinsics.ult_int(x, y)
+<(x::UInt64 , y::UInt64 ) = Core.Intrinsics.ult_int(x, y)
+<(x::UInt128, y::UInt128) = Core.Intrinsics.ult_int(x, y)
+
+>(x::Int8   , y::Int8   ) = Core.Intrinsics.slt_int(y, x)
+>(x::Int16  , y::Int16  ) = Core.Intrinsics.slt_int(y, x)
+>(x::Int32  , y::Int32  ) = Core.Intrinsics.slt_int(y, x)
+>(x::Int64  , y::Int64  ) = Core.Intrinsics.slt_int(y, x)
+>(x::Int128 , y::Int128 ) = Core.Intrinsics.slt_int(y, x)
+>(x::UInt8  , y::UInt8  ) = Core.Intrinsics.ult_int(y, x)
+>(x::UInt16 , y::UInt16 ) = Core.Intrinsics.ult_int(y, x)
+>(x::UInt32 , y::UInt32 ) = Core.Intrinsics.ult_int(y, x)
+>(x::UInt64 , y::UInt64 ) = Core.Intrinsics.ult_int(y, x)
+>(x::UInt128, y::UInt128) = Core.Intrinsics.ult_int(y, x)
+
+<=(x::Int8   , y::Int8   ) = Core.Intrinsics.sle_int(x, y)
+<=(x::Int16  , y::Int16  ) = Core.Intrinsics.sle_int(x, y)
+<=(x::Int32  , y::Int32  ) = Core.Intrinsics.sle_int(x, y)
+<=(x::Int64  , y::Int64  ) = Core.Intrinsics.sle_int(x, y)
+<=(x::Int128 , y::Int128 ) = Core.Intrinsics.sle_int(x, y)
+<=(x::UInt8  , y::UInt8  ) = Core.Intrinsics.ule_int(x, y)
+<=(x::UInt16 , y::UInt16 ) = Core.Intrinsics.ule_int(x, y)
+<=(x::UInt32 , y::UInt32 ) = Core.Intrinsics.ule_int(x, y)
+<=(x::UInt64 , y::UInt64 ) = Core.Intrinsics.ule_int(x, y)
+<=(x::UInt128, y::UInt128) = Core.Intrinsics.ule_int(x, y)
+
+>=(x::Int8   , y::Int8   ) = Core.Intrinsics.sle_int(y, x)
+>=(x::Int16  , y::Int16  ) = Core.Intrinsics.sle_int(y, x)
+>=(x::Int32  , y::Int32  ) = Core.Intrinsics.sle_int(y, x)
+>=(x::Int64  , y::Int64  ) = Core.Intrinsics.sle_int(y, x)
+>=(x::Int128 , y::Int128 ) = Core.Intrinsics.sle_int(y, x)
+>=(x::UInt8  , y::UInt8  ) = Core.Intrinsics.ule_int(y, x)
+>=(x::UInt16 , y::UInt16 ) = Core.Intrinsics.ule_int(y, x)
+>=(x::UInt32 , y::UInt32 ) = Core.Intrinsics.ule_int(y, x)
+>=(x::UInt64 , y::UInt64 ) = Core.Intrinsics.ule_int(y, x)
+>=(x::UInt128, y::UInt128) = Core.Intrinsics.ule_int(y, x)
+
+################################################################################
+
+const Array = Core.Array
+const Vector{T} = Core.Array{T, 1}
+const Matrix{T} = Core.Array{T, 2}
+
+length(a::Array{T, N}) where {T, N} = Core.Intrinsics.arraylen(a)
+
+################################################################################
+
+function two_sum(a::T, b::T) where {T}
+    sum = a ⊕ b
+    b_prime = sum ⊖ a
+    a_prime = sum ⊖ b_prime
+    a_err = a ⊖ a_prime
+    b_err = b ⊖ b_prime
+    return (sum, a_err ⊕ b_err)
+end
+
+function two_diff(a::T, b::T) where {T}
+    diff = a ⊖ b
+    b_prime = a ⊖ diff
+    a_prime = diff ⊕ b_prime
+    a_err = a ⊖ a_prime
+    b_err = b ⊖ b_prime
+    return (sum, a_err ⊖ b_err)
+end
+
+function two_prod(a::T, b::T) where {T}
+    p = a * b
+    p, Core.Intrinsics.fma_float(a, b, -p)
+end
 
 end # baremodule DZBase
